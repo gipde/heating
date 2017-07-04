@@ -2,11 +2,9 @@ package com.schneidernet.heating;
 
 
 import android.util.Base64;
-import android.util.JsonReader;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -30,13 +28,12 @@ public class Fetch {
     public static JSONArray getJSON(String restAPI) {
         URL url;
         try {
-            Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("172.20.10.2", 8080));
-            url = new URL(BASE_URL + ENDPOINT+restAPI);
+            url = new URL(BASE_URL + ENDPOINT + restAPI);
             HttpURLConnection connection =
-                    (HttpURLConnection) url.openConnection(proxy);
+                    (HttpURLConnection) url.openConnection();
 
             final String basicAuth = "Basic " + Base64.encodeToString((USER + ":" + PASSWORD).getBytes(), Base64.NO_WRAP);
-            connection.setRequestProperty ("Authorization", basicAuth);
+            connection.setRequestProperty("Authorization", basicAuth);
 
             InputStream inputStream = connection.getInputStream();
             BufferedReader reader = new BufferedReader(
